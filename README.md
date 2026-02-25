@@ -79,6 +79,18 @@ All results were consolidated into an executive dashboard and synthesised into f
 
 ## Business Implications
 
+1. High revenue volatility limits forecasting reliability and complicates cash flow planning, inventory management, and staffing allocation. Historical monthly performance alone cannot support predictable operational decision-making.
+
+2. An acquisition-driven growth model is financially demanding. Replacing churned customers through continuous acquisition increases marketing expenditure without compounding lifetime value from a loyal customer base.
+
+3. The rapid increase in returning customers during 2011 indicates emerging product-market resonance. However, without deliberate retention investment, this momentum may not translate into sustainable long-term revenue stability.
+
+4. Heavy dependence on the UK market introduces systemic exposure. Adverse regulatory, economic, or competitive shifts within the UK could materially impact overall performance, given the absence of meaningful geographic diversification.
+
+5. The January 2011 anomaly underscores the importance of robust data validation processes. Undetected metric distortions could result in flawed strategic decisions, particularly in areas such as retention budgeting and loyalty programme investment.
+
+---
+
 ## Recommendations
 
 ## Strategic Outlook
