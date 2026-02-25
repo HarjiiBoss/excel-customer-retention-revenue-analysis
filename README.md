@@ -41,6 +41,16 @@ E-commerce businesses heavily concentrated in a single dominant market face elev
 
 ## Business Questions
 
+This analysis was structured around five core business questions:
+
+1. Is revenue growth sustainable or primarily driven by new customer acquisition?
+2. How stable is monthly revenue, and what does volatility indicate about business predictability?
+3. Is the customer base developing loyalty, or does churn remain the dominant pattern?
+4. How concentrated is revenue across markets, and what systemic risks does this create?
+5. Are there anomalies in the data that could distort retention or revenue metrics?
+
+---
+
 ## Analysis Approach
 
 ## Key Findings
