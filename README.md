@@ -19,9 +19,11 @@ This project analyses customer retention patterns and revenue stability for a UK
 | Total Transactions | 166,381 |
 | Avg Monthly Revenue | £175,702.87 |
 | Avg Retention Rate | 21.27% |
-| Revenue Volatility (CV) | 78.60% |
-| UK Revenue Concentration | 84.42% |
-| Analysis Period | Jan 2010 — Dec 2011 |
+| Revenue Volatility (Coefficient of Variation) | 78.60% |
+| UK Revenue Share | 84.42% |
+| Analysis Period | Jan 2010 — Dec 2011 (22 active months) |
+
+> The business experienced rapid growth but exhibited high volatility, low retention, and significant geographic concentration risk.
 
 ---
 
