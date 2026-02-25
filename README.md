@@ -43,11 +43,11 @@ E-commerce businesses heavily concentrated in a single dominant market face elev
 
 This analysis was structured around five core business questions:
 
-1. Is revenue growth sustainable or primarily driven by new customer acquisition?
-2. How stable is monthly revenue, and what does volatility indicate about business predictability?
-3. Is the customer base developing loyalty, or does churn remain the dominant pattern?
-4. How concentrated is revenue across markets, and what systemic risks does this create?
-5. Are there anomalies in the data that could distort retention or revenue metrics?
+1. Is observed revenue growth structurally sustainable, or primarily driven by continuous new customer acquisition?
+2. How stable is monthly revenue performance, and what does observed volatility imply for forecasting reliability?
+3. Is the customer base demonstrating strengthening loyalty, or does churn remain the dominant behavioural pattern?
+4. How concentrated is revenue across geographic markets, and what systemic exposure does this create?
+5. Are there data anomalies or outliers that materially distort retention or revenue metrics?
 
 ---
 
