@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Taofeek Salami — Customer Retention & Revenue Stability Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --surface: #13161e;
+      --surface2: #1a1e28;
+      --border: #252a38;
+      --accent: #c8a96e;
+      --accent2: #7eb8c9;
+      --text: #e8e4dc;
+      --muted: #7a7f8e;
+      --green: #6dbf8a;
+      --red: #e07b6a;
+      --purple: #b48ecf;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── HERO ── */
+    header {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 8vw 4rem;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      top: -10%;
+      right: -5%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(200,169,110,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    h1 .accent { color: var(--accent); }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .meta-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .meta-value {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+    }
+
+    .hero-bio {
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.6s 0.35s ease both;
+    }
+
+    .badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 2px;
+      border: 1px solid;
+    }
+
+    .badge-excel   { color: #7bc47f;        border-color: rgba(123,196,127,0.3); background: rgba(123,196,127,0.07); }
+    .badge-pq      { color: var(--accent2); border-color: rgba(126,184,201,0.3); background: rgba(126,184,201,0.07); }
+    .badge-pivot   { color: var(--accent);  border-color: rgba(200,169,110,0.3); background: rgba(200,169,110,0.07); }
+    .badge-complete{ color: var(--green);   border-color: rgba(109,191,138,0.3); background: rgba(109,191,138,0.07); }
+
+    .hero-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+
+    .hero-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .hero-link::before { content: '→'; color: var(--accent); }
+    .hero-link:hover { color: var(--accent); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 8vw;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      animation: fadeUp 0.6s 0.6s ease both;
+    }
+
+    .scroll-hint::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--muted);
+    }
+
+    /* ── LAYOUT ── */
+    main { position: relative; z-index: 1; }
+    section { padding: 5rem 8vw; border-top: 1px solid var(--border); }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 2rem;
+      line-height: 1.2;
+    }
+
+    /* ── KPI SNAPSHOT ── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .kpi-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .kpi-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .kpi-context {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+    }
+
+    /* ── DASHBOARD IMAGE ── */
+    .dashboard-wrap {
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .dashboard-wrap img {
+      width: 100%;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .dashboard-wrap:hover img { transform: scale(1.01); }
+
+    .dashboard-caption {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-align: center;
+      padding: 0.8rem;
+      border: 1px solid var(--border);
+      border-top: none;
+    }
+
+    /* ── FINDINGS ── */
+    .findings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .finding-card {
+      background: var(--surface);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .finding-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .finding-card:hover { background: var(--surface2); }
+    .finding-card:hover::before { transform: scaleX(1); }
+
+    .finding-category {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .finding-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .finding-body {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .finding-body strong { color: var(--accent); font-weight: 500; }
+
+    .finding-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--border);
+      line-height: 1;
+      margin-top: auto;
+    }
+
+    /* ── INSIGHTS ── */
+    .insights-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .insight-item {
+      background: var(--surface);
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 2rem;
+      transition: background 0.2s;
+    }
+
+    .insight-item:hover { background: var(--surface2); }
+
+    .insight-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .insight-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .insight-category {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .insight-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 0.8rem;
+    }
+
+    .insight-text {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .insight-text strong { color: var(--accent); font-weight: 500; }
+
+    /* ── PROCESS ── */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .process-card {
+      background: var(--surface);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: background 0.2s;
+    }
+
+    .process-card:hover { background: var(--surface2); }
+
+    .process-phase {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .process-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .process-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── RECOMMENDATIONS ── */
+    .rec-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .rec-item {
+      background: var(--surface);
+      padding: 1.5rem 2rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      transition: background 0.2s;
+    }
+
+    .rec-item:hover { background: var(--surface2); }
+
+    .rec-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      min-width: 2rem;
+    }
+
+    .rec-content { display: flex; flex-direction: column; gap: 0.3rem; }
+
+    .rec-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .rec-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── DATA NOTE ── */
+    .data-note {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 1.5rem 2rem;
+      margin-top: 2rem;
+    }
+
+    .data-note-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .data-note p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 8vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-name { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--accent); }
+
+    .footer-links { display: flex; gap: 1.5rem; }
+
+    .footer-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .insight-item { grid-template-columns: 1fr; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<header>
+  <div class="hero-tag">Excel · Power Query · Pivot Tables · Dashboard</div>
+  <h1>Customer Retention<br/>&amp; <span class="accent">Revenue Stability</span><br/>Analysis</h1>
+
+  <div class="hero-meta">
+    <div class="meta-item">
+      <span class="meta-label">Dataset</span>
+      <span class="meta-value">E-Commerce UK</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Tool</span>
+      <span class="meta-value">Microsoft Excel</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Period</span>
+      <span class="meta-value">2010 — 2011</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Author</span>
+      <span class="meta-value">HarjiiBoss</span>
+    </div>
+  </div>
+
+  <p class="hero-bio">A structured 10-phase Excel analysis evaluating customer retention dynamics, revenue stability, and geographic concentration risk for a UK-based e-commerce retailer. Built to translate raw transactional data into actionable strategic insight.</p>
+
+  <div class="badge-row">
+    <span class="badge badge-excel">Excel</span>
+    <span class="badge badge-pq">Power Query</span>
+    <span class="badge badge-pivot">Pivot Tables</span>
+    <span class="badge badge-complete">Complete</span>
+  </div>
+
+  <div class="hero-links">
+    <a class="hero-link" href="https://github.com/HarjiiBoss/excel-customer-retention-revenue-analysis" target="_blank">GitHub Repo</a>
+    <a class="hero-link" href="https://docs.google.com/spreadsheets/d/1WrBkpR-vnKb2IgmhuFrKsBz_8FjFRKm5/edit?usp=share_link&ouid=115219376685376608772&rtpof=true&sd=true" target="_blank">Download Excel</a>
+    <a class="hero-link" href="https://harjiiboss.github.io" target="_blank">Portfolio</a>
+  </div>
+
+  <div class="scroll-hint">Scroll to explore</div>
+</header>
+
+<main>
+
+  <!-- ═══ PERFORMANCE SNAPSHOT ═══ -->
+  <section>
+    <div class="section-label reveal">Performance Snapshot</div>
+    <h2 class="reveal">Key Metrics at a Glance</h2>
+
+    <div class="kpi-grid reveal">
+      <div class="kpi-card">
+        <div class="kpi-label">Total Revenue</div>
+        <div class="kpi-value">£3.86M</div>
+        <div class="kpi-context">2010 — 2011</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Total Customers</div>
+        <div class="kpi-value">2,997</div>
+        <div class="kpi-context">unique customers</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Total Transactions</div>
+        <div class="kpi-value">166K</div>
+        <div class="kpi-context">cleaned records</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Avg Retention Rate</div>
+        <div class="kpi-value">21.27%</div>
+        <div class="kpi-context">excl. Jan 2011 anomaly</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Revenue Volatility</div>
+        <div class="kpi-value">78.60%</div>
+        <div class="kpi-context">coefficient of variation</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">UK Revenue Share</div>
+        <div class="kpi-value">84.42%</div>
+        <div class="kpi-context">of total revenue</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ DASHBOARD ═══ -->
+  <section>
+    <div class="section-label reveal">Executive Dashboard</div>
+    <h2 class="reveal">Built in Microsoft Excel</h2>
+    <div class="dashboard-wrap reveal">
+      <img src="dashboard/dashboard_full_view.png" alt="Customer Retention & Revenue Stability Dashboard" />
+    </div>
+    <div class="dashboard-caption reveal">Full executive dashboard — Dark Navy & Gold color system — built entirely in Microsoft Excel</div>
+  </section>
+
+  <!-- ═══ KEY FINDINGS ═══ -->
+  <section>
+    <div class="section-label reveal">Analysis</div>
+    <h2 class="reveal">What the Data Reveals</h2>
+
+    <div class="findings-grid reveal">
+
+      <div class="finding-card">
+        <div class="finding-category">Revenue Growth</div>
+        <div class="finding-title">8x Year-Over-Year Growth — But Highly Unstable</div>
+        <div class="finding-body">Revenue grew from an average of <strong>£36K/month in 2010</strong> to <strong>£292K/month in 2011</strong>. A CV of <strong>78.60%</strong> confirms the growth was volatile, with monthly revenue swinging between £17K and £421K.</div>
+        <div class="finding-number">01</div>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-category">Customer Retention</div>
+        <div class="finding-title">21.27% Avg Retention — Growth is Acquisition-Driven</div>
+        <div class="finding-body">The implied churn rate of <strong>~78.73%</strong> suggests most customers did not return after their initial purchase. Retention improved from below 10% in early 2010 to a peak of <strong>47.89% in November 2011</strong>.</div>
+        <div class="finding-number">02</div>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-category">Customer Behaviour</div>
+        <div class="finding-title">Returning Customers Grew 40–50x Through 2011</div>
+        <div class="finding-body">Returning customers grew from <strong>1–3 per month in early 2010</strong> to <strong>88–108 per month by late 2011</strong>, representing approximately 45% of active customers by November 2011 — early signs of loyalty development.</div>
+        <div class="finding-number">03</div>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-category">Market Concentration</div>
+        <div class="finding-title">84.42% of Revenue from UK — Extreme Concentration Risk</div>
+        <div class="finding-body">The second-largest market, EIRE, contributes only <strong>2.52%</strong>. No country falls in the medium range — concentration jumps directly from <strong>84.42% (UK) to 2.52% (EIRE)</strong>. Extreme single-market dependency confirmed.</div>
+        <div class="finding-number">04</div>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-category">Data Anomaly</div>
+        <div class="finding-title">January 2011 — 186.29% Retention Rate Excluded</div>
+        <div class="finding-body">Active customers surged from <strong>19 in December 2010</strong> to <strong>221 in January 2011</strong> — a 1,000%+ increase. This mathematical impossibility was excluded from all retention calculations to preserve analytical accuracy.</div>
+        <div class="finding-number">05</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ INSIGHTS ═══ -->
+  <section>
+    <div class="section-label reveal">Business Insights</div>
+    <h2 class="reveal">Structured Analytical Insights</h2>
+
+    <div class="insights-list reveal">
+
+      <div class="insight-item">
+        <div class="insight-left">
+          <div class="insight-number">01</div>
+          <div class="insight-category">Revenue Stability</div>
+        </div>
+        <div class="insight-right">
+          <div class="insight-title">Revenue Grew 8x but CV of 78.60% Signals Instability</div>
+          <div class="insight-text">Revenue grew approximately 8x from 2010 to 2011, increasing from an average of £36K per month to £292K. However, a coefficient of variation of <strong>78.60%</strong> indicates substantial instability, with monthly revenue fluctuating between £17K and £421K. Such volatility limits forecasting reliability and increases exposure to cash flow risk despite strong headline growth. The September 2011 peak of £421K suggests a potential seasonal effect which, if validated over multiple years, could inform inventory planning and marketing allocation around predictable high-demand periods.</div>
+        </div>
+      </div>
+
+      <div class="insight-item">
+        <div class="insight-left">
+          <div class="insight-number">02</div>
+          <div class="insight-category">Customer Retention</div>
+        </div>
+        <div class="insight-right">
+          <div class="insight-title">21.27% Average Retention — Largely Acquisition-Driven</div>
+          <div class="insight-text">With an average retention rate of <strong>21.27%</strong>, revenue growth appears largely acquisition-driven rather than loyalty-based. The implied churn rate of approximately <strong>78.73%</strong> suggests that most customers did not return after their initial purchase. However, retention improved significantly throughout 2011, rising from below 10% in early months to a peak of 47.89% in November, indicating early signs of strengthening customer loyalty.</div>
+        </div>
+      </div>
+
+      <div class="insight-item">
+        <div class="insight-left">
+          <div class="insight-number">03</div>
+          <div class="insight-category">Customer Behaviour</div>
+        </div>
+        <div class="insight-right">
+          <div class="insight-title">Returning Customers Grew 40–50x — Loyalty Base Emerging</div>
+          <div class="insight-text">New customers dominated monthly activity throughout the dataset, reinforcing an acquisition-led growth model. However, returning customers increased substantially from <strong>1–3 per month</strong> in early 2010 to <strong>88–108 per month</strong> by late 2011, accounting for approximately 45% of active customers by November 2011. This upward trajectory indicates early progress toward a more stable loyalty base.</div>
+        </div>
+      </div>
+
+      <div class="insight-item">
+        <div class="insight-left">
+          <div class="insight-number">04</div>
+          <div class="insight-category">Market Risk</div>
+        </div>
+        <div class="insight-right">
+          <div class="insight-title">84.42% UK Dependency — Extreme Concentration Exposure</div>
+          <div class="insight-text">The United Kingdom accounts for <strong>84.42% of total revenue</strong> and <strong>90.52% of customers</strong>, indicating significant single-market concentration. The second-largest market, EIRE, contributes only 2.52%, highlighting the absence of meaningful geographic diversification. Such dependency exposes the business to substantial systemic risk from regulatory changes, economic downturns, or competitive pressures within the UK.</div>
+        </div>
+      </div>
+
+      <div class="insight-item">
+        <div class="insight-left">
+          <div class="insight-number">05</div>
+          <div class="insight-category">Data Anomaly</div>
+        </div>
+        <div class="insight-right">
+          <div class="insight-title">January 2011 Anomaly — 186.29% Retention Excluded</div>
+          <div class="insight-text">January 2011 recorded an apparent retention rate of <strong>186.29%</strong>, a mathematical impossibility under normal customer behaviour assumptions. This distortion was driven by a sharp increase in active customers from <strong>19 in December 2010</strong> to <strong>221 in January 2011</strong>, representing an increase of over 1,000%. To preserve analytical accuracy, this outlier was excluded from average retention calculations, resulting in a more representative average of <strong>21.27%</strong> across the remaining 21 months.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ RECOMMENDATIONS ═══ -->
+  <section>
+    <div class="section-label reveal">Recommendations</div>
+    <h2 class="reveal">Strategic Actions</h2>
+
+    <div class="rec-list reveal">
+      <div class="rec-item">
+        <div class="rec-number">1</div>
+        <div class="rec-content">
+          <div class="rec-title">Prioritise Retention Infrastructure Investment</div>
+          <div class="rec-desc">Implement structured post-purchase follow-ups, loyalty programmes, and personalised re-engagement campaigns to convert first-time buyers into repeat customers. Strengthening retention reduces reliance on continuous acquisition and improves revenue predictability.</div>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-number">2</div>
+        <div class="rec-content">
+          <div class="rec-title">Validate Seasonality Patterns</div>
+          <div class="rec-desc">Investigate the September 2011 £421K revenue peak to determine whether it reflects recurring seasonality, promotional activity, or one-off external factors. If repeatable patterns are confirmed, align inventory planning and marketing allocation accordingly.</div>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-number">3</div>
+        <div class="rec-content">
+          <div class="rec-title">Consolidate Retention Momentum</div>
+          <div class="rec-desc">Returning customers accounted for approximately 45% of active customers by November 2011. This upward trajectory should be reinforced through deliberate loyalty investment before growth normalises or reverses.</div>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-number">4</div>
+        <div class="rec-content">
+          <div class="rec-title">Gradually Diversify Geographic Exposure</div>
+          <div class="rec-desc">Increase strategic focus on existing secondary markets such as Germany, the Netherlands, and France, which collectively contribute approximately 7% of revenue. Controlled expansion within known markets offers a lower-risk pathway toward diversification.</div>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-number">5</div>
+        <div class="rec-content">
+          <div class="rec-title">Strengthen Reporting Governance</div>
+          <div class="rec-desc">Implement automated anomaly detection and validation checks within reporting workflows to prevent metric distortion, ensuring that strategic decisions are based on reliable data.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PROCESS ═══ -->
+  <section>
+    <div class="section-label reveal">Methodology</div>
+    <h2 class="reveal">10-Phase Analytical Workflow</h2>
+
+    <div class="process-grid reveal">
+      <div class="process-card">
+        <div class="process-phase">Phase 1</div>
+        <div class="process-title">Data Import</div>
+        <div class="process-desc">Imported CSV via Power Query. Set data types manually, renamed columns for consistency, added Year, Month, YearMonth and Revenue calculated columns.</div>
+      </div>
+      <div class="process-card">
+        <div class="process-phase">Phase 2</div>
+        <div class="process-title">Data Cleaning</div>
+        <div class="process-desc">Removed 5,269 duplicates, deleted null Customer IDs and Invoice Dates, removed 4,111 return rows. Added First_Purchase_Date and Customer_Type columns. Final: 166,381 rows.</div>
+      </div>
+      <div class="process-card">
+        <div class="process-phase">Phase 3</div>
+        <div class="process-title">KPI Design</div>
+        <div class="process-desc">Defined 10 core KPIs across Customer, Revenue and Risk pillars. Built PT_Active_Customers, PT_New_vs_Returning and PT_Monthly_Revenue PivotTables.</div>
+      </div>
+      <div class="process-card">
+        <div class="process-phase">Phase 4</div>
+        <div class="process-title">Retention Calculation</div>
+        <div class="process-desc">Built tbl_Retention with month-over-month retention and churn rates. Calculated avg retention of 21.27% using AVERAGEIF to exclude the Jan 2011 anomaly.</div>
+      </div>
+      <div class="process-card">
+        <div class="process-phase">Phase 5</div>
+        <div class="process-title">Revenue Stability</div>
+        <div class="process-desc">Built tbl_Revenue_Stability with growth %, cumulative revenue and revenue per customer type. CV = 78.60%. 2011 avg revenue 8x higher than 2010.</div>
+      </div>
+      <div class="process-card">
+        <div class="process-phase">Phase 6</div>
+        <div class="process-title">Segment Risk Analysis</div>
+        <div class="process-desc">Built tbl_Segment_Risk segmenting revenue and customers by country. Applied High/Medium/Low risk flags. UK flagged High at 84.42% revenue concentration.</div>
+      </div>
+      <div class="process-card">
+        <div class="process-phase">Phase 7</div>
+        <div class="process-title">Dashboard</div>
+        <div class="process-desc">Built executive dashboard with 5 KPI cards, 4 charts (revenue line, retention line, country bar, new vs returning stacked column), summary insight box and footer.</div>
+      </div>
+      <div class="process-card">
+        <div class="process-phase">Phase 8</div>
+        <div class="process-title">Insight Writing</div>
+        <div class="process-desc">Wrote 5 structured business insights covering revenue growth, retention, customer behaviour, market concentration and the January 2011 anomaly.</div>
+      </div>
+      <div class="process-card">
+        <div class="process-phase">Phase 9</div>
+        <div class="process-title">README</div>
+        <div class="process-desc">Wrote full project README covering executive summary, performance snapshot, business questions, key findings, implications, recommendations and strategic outlook.</div>
+      </div>
+      <div class="process-card">
+        <div class="process-phase">Phase 10</div>
+        <div class="process-title">Polish & Export</div>
+        <div class="process-desc">Polished dashboard, removed gridlines, hid working sheets, set Dashboard as active sheet. Exported screenshots. Uploaded to GitHub with Google Drive link for Excel file.</div>
+      </div>
+    </div>
+
+    <div class="data-note reveal">
+      <div class="data-note-label">Analytical Note</div>
+      <p>Rev_Per_New_Customer and Rev_Per_Returning_Customer were calculated by dividing total monthly revenue by the respective customer count. This method does not isolate revenue generated by each customer type at transaction level and should be interpreted with caution. A more accurate segmentation would require tagging individual transactions by Customer_Type and summing revenue separately.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <span class="footer-name">Taofeek Salami</span>
+  <div class="footer-links">
+    <a class="footer-link" href="https://linkedin.com/in/taofeek-salami-460a93245" target="_blank">LinkedIn</a>
+    <a class="footer-link" href="https://github.com/HarjiiBoss" target="_blank">GitHub</a>
+    <a class="footer-link" href="mailto:salamitaofeek92@gmail.com">Email</a>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
