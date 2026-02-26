@@ -15,7 +15,7 @@ Five structured insights derived from the analysis across Phases 3–6. Each ins
 - Peak month = September 2011 (£421K)
 - Lowest month = December 2010 (£17K)
 
-**Insight:**
+**Insight:**  
 Revenue grew approximately 8x from 2010 to 2011, increasing from an average of £36K per month to £292K. However, a coefficient of variation of 78.60% indicates substantial instability, with monthly revenue fluctuating between £17K and £421K. Such volatility limits forecasting reliability and increases exposure to cash flow risk despite strong headline growth. The September 2011 peak of £421K suggests a potential seasonal effect which, if validated over multiple years, could inform inventory planning and marketing allocation around predictable high-demand periods.
 
 ---
@@ -29,7 +29,7 @@ Revenue grew approximately 8x from 2010 to 2011, increasing from an average of �
 - Retention peak = 47.89% in November 2011
 - Retention grew steadily throughout 2011
 
-**Insight:**
+**Insight:**  
 With an average retention rate of 21.27%, revenue growth appears largely acquisition-driven rather than loyalty-based. The implied churn rate of approximately 78.73% suggests that most customers did not return after their initial purchase. However, retention improved significantly throughout 2011, rising from below 10% in early months to a peak of 47.89% in November, indicating early signs of strengthening customer loyalty. Investigating the drivers behind the November peak, including product mix, promotional activity, or seasonal demand patterns, could yield actionable strategies for improving long-term retention performance.
 
 ---
@@ -43,7 +43,7 @@ With an average retention rate of 21.27%, revenue growth appears largely acquisi
 - New customers peaked at 185 in January 2011
 - By November 2011, returning customers represented 108 out of 241 — approximately 45% of active customers
 
-**Insight:**
+**Insight:**  
 New customers dominated monthly activity throughout the dataset, reinforcing an acquisition-led growth model. However, returning customers increased substantially from 1–3 per month in early 2010 to 88–108 per month by late 2011, accounting for approximately 45% of active customers by November 2011. This upward trajectory indicates early progress toward a more stable loyalty base, though the business remained reliant on continuous customer acquisition to sustain revenue levels. Strengthening this retention trend through targeted loyalty programmes, personalised re-engagement strategies, and structured post-purchase follow-ups could reduce acquisition dependency and enhance long-term revenue stability.
 
 ---
@@ -61,7 +61,7 @@ New customers dominated monthly activity throughout the dataset, reinforcing an 
 - EIRE + Germany + Netherlands + France combined = £366,121.95 — 9.47%
 - Risk Flag: UK = High, all others = Low, no Medium range country
 
-**Insight:**
+**Insight:**  
 The United Kingdom accounts for 84.42% of total revenue and 90.52% of customers, indicating significant single-market concentration. The second-largest market, EIRE, contributes only 2.52%, highlighting the absence of meaningful geographic diversification. Such dependency exposes the business to substantial systemic risk, as regulatory changes, economic downturns, or competitive pressures within the UK could disproportionately affect overall performance. Gradual expansion within existing secondary markets such as Germany, the Netherlands, and France, which collectively contribute approximately 7% of revenue, may provide a lower-risk pathway toward revenue diversification and improved resilience.
 
 ---
@@ -76,7 +76,7 @@ The United Kingdom accounts for 84.42% of total revenue and 90.52% of customers,
 - True average retention rate = 21.27% (anomaly excluded)
 - Anomaly excluded from all retention calculations
 
-**Insight:**
+**Insight:**  
 January 2011 recorded an apparent retention rate of 186.29%, a mathematical impossibility under normal customer behavior assumptions. This distortion was driven by a sharp increase in active customers from 19 in December 2010 to 221 in January 2011, representing an increase of over 1,000%. The anomaly likely reflects a data irregularity, bulk transaction event, promotional campaign, or change in data capture methodology rather than genuine customer retention. To preserve analytical accuracy, this outlier was excluded from average retention calculations, resulting in a more representative average retention rate of 21.27% across the remaining 21 months.
 
 ---
