@@ -139,6 +139,14 @@ From a data governance perspective, the January 2011 anomaly underscores the imp
 
 ---
 
+## Download
+
+| File | Link |
+|---|---|
+| Excel Workbook | [Customer_Retention_Revenue_Analysis.xlsx](https://docs.google.com/spreadsheets/d/1WrBkpR-vnKb2IgmhuFrKsBz_8FjFRKm5/edit?usp=share_link&ouid=115219376685376608772&rtpof=true&sd=true) |
+
+---
+
 ## Methodology & Tools
 
 - **Tool:** Microsoft Excel (Power Query, Pivot Tables, Charts)
