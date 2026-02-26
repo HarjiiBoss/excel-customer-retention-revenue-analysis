@@ -112,6 +112,16 @@ Implement automated anomaly detection and validation checks within reporting wor
 
 ## Strategic Outlook
 
+The business enters 2012 with strong headline growth but notable structural vulnerabilities. Revenue volatility, acquisition dependency, and geographic concentration create compounded exposure that may constrain long-term scalability if left unaddressed.
+
+The improving retention trajectory observed throughout 2011 is a positive signal, but early loyalty momentum remains fragile. The opportunity to transition from acquisition-led expansion to a retention-driven revenue model is present, yet requires deliberate and sustained investment in customer experience, post-purchase engagement, and retention analytics.
+
+Geographic diversification represents a medium-term strategic priority. Heavy reliance on the UK market exposes the business to single-market shocks without a meaningful revenue buffer. Incremental expansion within established secondary markets provides a structured path toward greater resilience.
+
+From a data governance perspective, the January 2011 anomaly underscores the importance of scalable reporting infrastructure. As retention and revenue metrics become central to strategic planning, decision-making must be supported by validated and systematically monitored data processes.
+
+---
+
 ## Process
 
 ## Methodology & Tools
