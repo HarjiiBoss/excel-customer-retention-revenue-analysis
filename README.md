@@ -93,19 +93,19 @@ All results were consolidated into an executive dashboard and synthesised into f
 
 ## Recommendations
 
-1. **Prioritise retention infrastructure investment.**
+1. **Prioritise retention infrastructure investment.**  
 Implement structured post-purchase follow-ups, loyalty programmes, and personalised re-engagement campaigns to convert first-time buyers into repeat customers. Strengthening retention reduces reliance on continuous acquisition and improves revenue predictability.
 
-2. **Validate seasonality patterns.**
+2. **Validate seasonality patterns.**  
 Investigate the September 2011 £421K revenue peak to determine whether it reflects recurring seasonality, promotional activity, or one-off external factors. If repeatable patterns are confirmed, align inventory planning and marketing allocation accordingly.
 
-3. **Consolidate retention momentum.**
+3. **Consolidate retention momentum.**  
 Returning customers accounted for approximately 45% of active customers by November 2011. This upward trajectory should be reinforced through deliberate loyalty investment before growth normalises or reverses.
 
-4. **Gradually diversify geographic exposure.**
+4. **Gradually diversify geographic exposure.**  
 Increase strategic focus on existing secondary markets such as Germany, the Netherlands, and France, which collectively contribute approximately 7% of revenue. Controlled expansion within known markets offers a lower-risk pathway toward diversification.
 
-5. **Strengthen reporting governance.**
+5. **Strengthen reporting governance.**  
 Implement automated anomaly detection and validation checks within reporting workflows to prevent metric distortion, ensuring that strategic decisions are based on reliable data.
 
 ---
