@@ -124,18 +124,122 @@ From a data governance perspective, the January 2011 anomaly underscores the imp
 
 ## Process
 
-| Phase | What Was Done |
-|---|---|
-| Phase 1 — Data Import | Imported CSV via Power Query. Deleted auto-generated Changed Type step and manually set data types — InvoiceNo, StockCode, Description, CustomerID and Country as Text, Quantity as Whole Number, InvoiceDate as Date/Time, UnitPrice as Decimal Number. Renamed columns for consistency — InvoiceNo to Invoice_No, StockCode to Stock_Code, UnitPrice to Unit_Price, InvoiceDate to Invoice_Date, CustomerID to Customer_ID. Added Year, Month and YearMonth calculated columns from Invoice_Date. Added Revenue column as Quantity × Unit_Price. Closed and loaded into Excel as a table named Raw_Data. |
-| Phase 2 — Data Cleaning | Copied Raw_Data to Cleaned_Data sheet (table: tbl_Cleaned). Removed 5,269 duplicate rows. Confirmed Invoice_Date as true Date/Time format (Custom). Validated Revenue using =ROUND([@[Quantity]]*[@[Unit_Price]],2)=[@[Revenue]] — FALSE rows identified as return/cancellation entries and floating point rounding differences (0.001), not real errors. Checked missing values using COUNTBLANK(tbl_Cleaned[ColumnName]) — found 135,037 blank Customer_IDs and 305,984 blank Invoice_Dates, all deleted. Removed 4,111 negative Quantity rows (returns/cancellations) using =IF([@[Quantity]]<0,"Return","Sale"). Added First_Purchase_Date using TEXT(MINIFS()) with INT() to strip Date/Time component, converted to true date via DATEVALUE, pasted as values only. Added Customer_Type using =IF(INT([@[Invoice_Date]])=[@[First_Purchase_Date]],"New","Returning"). Final clean dataset: 166,381 rows. |
-| Phase 3 — KPI Design | Defined 10 core KPIs across three pillars — Customer, Revenue and Risk. Built three PivotTables in a dedicated Pivot_Tables sheet: (1) PT_Active_Customers — Active Customers per Month using Customer_Count SUM, formatted as whole numbers, Grand Total renamed to Unique Customers; (2) PT_New_vs_Returning — New vs Returning Customers per Month with Customer_Type as column, Grand Total row and column removed; (3) PT_Monthly_Revenue — Monthly Revenue SUM, Revenue column formatted as £ currency, Grand Total renamed to Total Revenue (£). All Row Labels renamed to Month. Distinct Count unavailable on Mac Excel — resolved using a Customer_Count helper column (1/COUNTIF) in tbl_Cleaned. Total unique customers: 2,997. Total Revenue: £3,865,463.08. |
-| Phase 4 — Retention Calculation | Created Retention_Calc sheet and built a structured table referencing data directly from PT_Active_Customers and PT_New_vs_Returning PivotTables. Links kept live so sheet auto-updates on PivotTable refresh. Columns: Month, Active_Customers, New_Customers, Returning_Customers, Retention_Rate (Returning Month n / Active Month n-1), Churn_Rate (1 − Retention_Rate). First month left blank — no previous month for comparison. Converted to table named tbl_Retention. Retention_Rate and Churn_Rate formatted as Percentage (2 decimal places). Average Retention Rate calculated using AVERAGEIF(tbl_Retention[Retention_Rate],"<1") = 21.27% — excludes 2011-01 anomaly (186.29%) which resulted from customer jump from 19 (2010-12) to 221 (2011-01). Anomaly flagged for Phase 8. |
-| Phase 5 — Revenue Stability | Created Revenue_Stability sheet with table tbl_Revenue_Stability. Columns: Month, Monthly_Revenue (referenced from PT_Monthly_Revenue), Prev_Monthly_Revenue, Revenue_Growth_Pct calculated as (Current − Previous) / Previous formatted as percentage, Cumulative_Revenue as running total using SUM($B$2:B2). Added New_Customers and Returning_Customers columns using ROUND(IFERROR(XLOOKUP())) from tbl_Retention. Added Rev_Per_New_Customer and Rev_Per_Returning_Customer using Monthly_Revenue divided by respective customer counts — N/A returned for months with zero returning customers. Added summary section below table: Mean Monthly Revenue = 175,702.87, Revenue Volatility (Std Dev) = 138,095.97, Coefficient of Variation (CV) = 78.60% — indicating extremely high revenue volatility. Summary cells styled using 20% Accent cell styles. Added AVERAGEIF calculations for 2010 and 2011 average monthly revenue — 2010: £36,124.71, 2011: £292,017.99. Confirmed 2011 average was approximately 8x higher than 2010. |
-| Phase 6 — Segment Risk Analysis | Created Segment_Risk sheet with table tbl_Segment_Risk. Country used as segment instead of Category — Description column had 4,070 unique values, too granular for risk analysis. Built PT_Revenue_By_Country and PT_Customer_By_Country PivotTables in Pivot_Tables sheet. Columns: Country, Revenue (XLOOKUP from PT_Revenue_By_Country), Revenue_Contribution_Pct (Revenue/Total Revenue), Customer_Count (XLOOKUP from PT_Customer_By_Country), Customer_Contribution_Pct (Customer_Count/Total Customers), Risk_Flag using IFS formula — High (≥50%), Medium (10-49%), Low (<10%). Key finding: UK = 84.42% revenue and 90.52% customers — only High risk flag. No Medium range countries — concentration jumps from 84.42% (UK) to 2.52% (EIRE). Extreme single-market dependency confirmed. Additional table tbl_Top5_Countries created in Segment_Risk sheet during Phase 7 — Top 5 countries by revenue plus All Others row (£236,141.88 / 6.11%). Used as data source for Dashboard country chart to replace cluttered 33-country visual. |
-| Phase 7 — Dashboard | Built Dashboard sheet with full executive layout. Header: title shape (Dark Navy, 20pt Bold White) — "£3.8M Revenue in 2010–2011 with High Volatility and 84% Market Concentration"; subtitle shape (Medium Navy, 9pt) — dataset context and updated date. Five KPI cards (Dark Navy, Gold numbers, Muted Blue-Grey context labels): Total Revenue £3.86M, Total Customers 2,997, Avg Retention Rate 21.27%, Revenue Volatility CV 78.60%, UK Concentration 84.42%. Four charts: (1) Monthly Revenue Line Chart — Gold, A to H; (2) Retention Rate Line Chart — Navy, I to P, with Jan 2011 anomaly annotation; (3) Revenue by Country Horizontal Bar — Top 5 + All Others, UK Gold, others Grey, A to H; (4) New vs Returning Stacked Column — Navy/Gold, I to P. Summary Insight Box — three section structured findings with Gold title, White headers, Muted Blue-Grey bullets, White italic conclusion. Footer connected directly below summary box. Gridlines removed. Color meaning system: Gold = Revenue, Navy = Customer/Retention metrics. |
-| Phase 8 — Insight Writing | Wrote five structured insights covering: Revenue Growth & Volatility (8x growth, CV 78.60%), Customer Retention (21.27% avg, 78.73% churn), New vs Returning Behaviour (returning customers grew 40-50x), Market Concentration Risk (84.42% UK dependency), and January 2011 Anomaly (186.29% retention excluded from calculations). Each insight includes key data points, analytical observation, business implication and recommendation. Analytical note added flagging Rev_Per_Customer calculation limitation. |
-| Phase 9 — README | Wrote full project README covering Executive Summary, Performance Snapshot, Objective, Business Context, Business Questions, Analysis Approach, Key Findings, Business Implications, Recommendations, Strategic Outlook, Process table, Methodology & Tools, and Data Source. |
-| Phase 10 — Polish & Export | Dashboard polished — gridlines removed, chart titles verified, KPI cards checked, summary box and footer confirmed visible. Workbook polished — Sheet1 deleted, all tabs correctly named, Raw_Data and Cleaned_Data sheets hidden, Dashboard set as active sheet on open. Three screenshots taken: dashboard_full_view.png (75% zoom), dashboard_top.png and dashboard_bottom.png (100% zoom). Excel file (45MB) hosted on Google Drive due to GitHub 25MB upload limit — link added to README. All phase documentation uploaded to docs/ folder, screenshots to dashboard/ folder, color palette to assets/ folder on GitHub. |
+I followed a structured 10-phase analytical workflow to ensure data integrity and reproducibility.
+
+<details>
+<summary><b>Phase 1 — Data Import & Transformation (Power Query)</b></summary>
+
+- **Action:** Imported CSV via Power Query. Deleted auto-generated Changed Type step and manually set data types — InvoiceNo, StockCode, Description, CustomerID and Country as Text, Quantity as Whole Number, InvoiceDate as Date/Time, UnitPrice as Decimal Number.
+- **Columns Renamed:** Invoice_No, Stock_Code, Unit_Price, Invoice_Date, Customer_ID for consistency.
+- **Calculated Columns Added:** Year, Month and YearMonth from Invoice_Date. Revenue as Quantity × Unit_Price.
+- **Result:** Closed and loaded into Excel as a table named Raw_Data with a clean, refreshable Power Query connection.
+
+</details>
+
+<details>
+<summary><b>Phase 2 — Data Cleaning & Validation</b></summary>
+
+- **Setup:** Copied Raw_Data to Cleaned_Data sheet (table: tbl_Cleaned).
+- **Duplicates:** Identified and removed 5,269 duplicate rows.
+- **Revenue Validation:** Used `=ROUND([@[Quantity]]*[@[Unit_Price]],2)=[@[Revenue]]` — FALSE rows identified as return/cancellation entries and floating point rounding differences (0.001), not real errors.
+- **Missing Data:** COUNTBLANK checks found 135,037 blank Customer_IDs and 305,984 blank Invoice_Dates — all deleted.
+- **Returns Removed:** Flagged and deleted 4,111 negative Quantity rows using `=IF([@[Quantity]]<0,"Return","Sale")`.
+- **Customer_Type Flag:** Added First_Purchase_Date using `TEXT(MINIFS())` with `INT()` to strip time component, converted via `DATEVALUE`, pasted as values. Customer_Type derived as `=IF(INT([@[Invoice_Date]])=[@[First_Purchase_Date]],"New","Returning")`.
+- **Final Count:** 166,381 clean, validated rows.
+
+</details>
+
+<details>
+<summary><b>Phase 3 — KPI Design & PivotTable Setup</b></summary>
+
+- **KPIs Defined:** 10 core KPIs across three pillars — Customer, Revenue and Risk.
+- **PivotTables Built:**
+  - PT_Active_Customers — Active Customers per Month using Customer_Count SUM, Grand Total renamed to Unique Customers.
+  - PT_New_vs_Returning — New vs Returning Customers per Month with Customer_Type as column, Grand Totals removed.
+  - PT_Monthly_Revenue — Monthly Revenue SUM formatted as £ currency, Grand Total renamed to Total Revenue (£).
+- **Mac Excel Workaround:** Distinct Count unavailable — resolved using a Customer_Count helper column (`1/COUNTIF`) in tbl_Cleaned.
+- **Result:** Total unique customers: 2,997. Total Revenue: £3,865,463.08.
+
+</details>
+
+<details>
+<summary><b>Phase 4 — Retention Calculation</b></summary>
+
+- **Setup:** Created Retention_Calc sheet with a structured table (tbl_Retention) referencing PT_Active_Customers and PT_New_vs_Returning directly — links kept live for auto-refresh.
+- **Columns:** Month, Active_Customers, New_Customers, Returning_Customers, Retention_Rate (Returning Month n / Active Month n-1), Churn_Rate (1 − Retention_Rate).
+- **Anomaly Handling:** January 2011 produced a 186.29% retention rate due to a customer jump from 19 (Dec 2010) to 221 (Jan 2011) — excluded from averages using `AVERAGEIF(tbl_Retention[Retention_Rate],"<1")`.
+- **Result:** Average Retention Rate = 21.27% across 21 valid months. Anomaly flagged for Phase 8 insight.
+
+</details>
+
+<details>
+<summary><b>Phase 5 — Revenue Stability Analysis</b></summary>
+
+- **Setup:** Created Revenue_Stability sheet with table tbl_Revenue_Stability.
+- **Columns:** Month, Monthly_Revenue, Prev_Monthly_Revenue, Revenue_Growth_Pct as (Current − Previous) / Previous, Cumulative_Revenue as running total using `SUM($B$2:B2)`.
+- **Customer Revenue:** New_Customers and Returning_Customers pulled via `ROUND(IFERROR(XLOOKUP()))` from tbl_Retention. Rev_Per_New_Customer and Rev_Per_Returning_Customer calculated — N/A returned for months with zero returning customers.
+- **Summary Statistics:** Mean Monthly Revenue = £175,702.87. Revenue Volatility (Std Dev) = £138,095.97. Coefficient of Variation (CV) = 78.60% — indicating extremely high revenue volatility.
+- **Year Comparison:** 2010 average monthly revenue £36,124.71 vs 2011 average £292,017.99 — confirming approximately 8x year-over-year growth.
+
+</details>
+
+<details>
+<summary><b>Phase 6 — Segment & Geographic Risk Analysis</b></summary>
+
+- **Setup:** Created Segment_Risk sheet with table tbl_Segment_Risk. Country used as segment — Description column had 4,070 unique values, too granular for meaningful risk classification.
+- **Data Sources:** PT_Revenue_By_Country and PT_Customer_By_Country PivotTables built in Pivot_Tables sheet.
+- **Columns:** Country, Revenue, Revenue_Contribution_Pct, Customer_Count, Customer_Contribution_Pct, Risk_Flag using IFS formula — High (≥50%), Medium (10–49%), Low (<10%).
+- **Key Finding:** UK = 84.42% revenue and 90.52% customers — only High risk flag. No Medium range countries — concentration drops directly from 84.42% (UK) to 2.52% (EIRE). Extreme single-market dependency confirmed.
+- **Dashboard Prep:** tbl_Top5_Countries created — Top 5 countries by revenue plus All Others row (£236,141.88 / 6.11%) — used as data source for Dashboard country chart to replace cluttered 33-country visual.
+
+</details>
+
+<details>
+<summary><b>Phase 7 — Dashboard Development</b></summary>
+
+- **Header:** Title shape (Dark Navy, 20pt Bold White) — "£3.8M Revenue in 2010–2011 with High Volatility and 84% Market Concentration". Subtitle shape (Medium Navy, 9pt) — dataset context and updated date.
+- **KPI Cards (×5):** Dark Navy background, Gold numbers, Muted Blue-Grey context labels — Total Revenue £3.86M, Total Customers 2,997, Avg Retention Rate 21.27%, Revenue Volatility CV 78.60%, UK Concentration 84.42%.
+- **Charts (×4):**
+  - Monthly Revenue Line Chart — Gold, columns A–H.
+  - Retention Rate Line Chart — Navy, columns I–P, with Jan 2011 anomaly annotation.
+  - Revenue by Country Horizontal Bar — Top 5 + All Others, UK bar Gold, others Light Grey, columns A–H.
+  - New vs Returning Stacked Column — Navy/Gold, columns I–P.
+- **Summary Insight Box:** Three-section structured findings with Gold title, White headers, Muted Blue-Grey bullets and White italic conclusion. Footer directly below.
+- **Design System:** Gold = Revenue metrics. Navy = Customer/Retention metrics. Gridlines removed throughout.
+
+</details>
+
+<details>
+<summary><b>Phase 8 — Business Insights & Recommendations</b></summary>
+
+- **Five structured insights written**, each covering observation, business implication and strategic recommendation:
+  1. Revenue Growth & Volatility — 8x growth confirmed but CV of 78.60% signals structural instability.
+  2. Customer Retention — 21.27% average retention rate and 78.73% churn rate confirm acquisition-driven growth model.
+  3. New vs Returning Behaviour — Returning customers grew 40–50x through 2011, signalling early loyalty momentum.
+  4. Market Concentration Risk — 84.42% UK revenue dependency confirmed as extreme single-market exposure.
+  5. January 2011 Anomaly — 186.29% retention outlier identified, isolated and excluded from all average calculations.
+- **Analytical Note:** Rev_Per_Customer calculation limitation documented — divides total monthly revenue by customer count and does not isolate revenue by customer type at transaction level.
+
+</details>
+
+<details>
+<summary><b>Phase 9 — README & Documentation</b></summary>
+
+- **README Written:** Full project documentation covering Executive Summary, Performance Snapshot, Objective, Business Context, Business Questions, Analysis Approach, Key Findings, Business Implications, Recommendations, Strategic Outlook, Process table, Methodology & Tools and Data Source.
+- **Phase Docs:** Individual markdown files created for each phase and uploaded to the `docs/` folder on GitHub.
+- **Assets:** Color palette documented in `assets/color_palette.md`.
+
+</details>
+
+<details>
+<summary><b>Phase 10 — Polish & Export</b></summary>
+
+- **Dashboard Polish:** Gridlines removed, chart titles verified, KPI cards checked, summary box and footer confirmed visible.
+- **Workbook Polish:** Sheet1 deleted, all tabs correctly named, Raw_Data and Cleaned_Data sheets hidden, Dashboard set as active sheet on open.
+- **Screenshots:** dashboard_full_view.png (75% zoom), dashboard_top.png and dashboard_bottom.png (100% zoom).
+- **Export:** Excel file (45MB) hosted on Google Drive due to GitHub 25MB upload limit — link added to README. All phase documentation uploaded to `docs/` folder, screenshots to `dashboard/` folder, color palette to `assets/` folder on GitHub.
+
+</details>
 
 ---
 
